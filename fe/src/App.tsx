@@ -1,5 +1,7 @@
 import React from 'react';
+import { useGetUserBookingsQuery } from './api/bookingsApi';
 import './App.css';
+import BookingList from './bookings/BookingList';
 import VehicleList from './vehicles/VehicleList';
 
 function App() {
@@ -11,6 +13,7 @@ function App() {
         </h1>
       </header>
       <VehicleList />
+      <BookingList />
     </div>
   );
 }
