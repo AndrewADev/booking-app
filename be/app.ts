@@ -3,9 +3,10 @@ import cors from "cors";
 import { VehiclesService } from "./services/VehiclesService";
 import { loadBookingsData, loadVehiclesData } from "./utils/loadMockData";
 import { BookingService } from "./services/BookingService";
-import { mainUserId } from "./mock-data/Users";
 import { connectToDatabase } from "./database";
 import { Db } from "mongodb";
+import vehicles from "./api/vehicles";
+import bookings from "./api/bookings";
 
 const app = express();
 
@@ -17,13 +18,10 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 const port = 3333;
-
-// TODO: better separation/setup
-
-/**
- * Services
- */
 const onDatabaseConnected = async (db: Db) => {
+  /**
+   * Services
+   */
   app.locals.vehiclesService = new VehiclesService(db);
   app.locals.bookingService = new BookingService(db);
 
@@ -38,16 +36,9 @@ const onDatabaseConnected = async (db: Db) => {
   });
 };
 
-app.get("/api/vehicles", async (req, res) => {
-  const vehicles = await app.locals.vehiclesService.getAll();
-  res.send(vehicles);
-});
+app.use("/api/vehicles", vehicles);
 
-app.get("/api/bookings", async (req, res) => {
-  // HACK: should be retrieved from Auth
-  const bookings = await app.locals.bookingService.getAllBookingsForUser(mainUserId);
-  res.send(bookings);
-});
+app.use("/api/bookings", bookings);
 
 connectToDatabase(
   "mongodb://localhost:27017",
