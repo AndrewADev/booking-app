@@ -1,21 +1,13 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
-import { styled } from "@mui/material/styles";
-
-const GridContainer = styled(Grid)(({ theme }) => ({
-  padding: theme.spacing(1),
-  display: "flex",
-  justifyContent: "space-between",
-  backgroundColor: "#E5E5E5",
-  color: "#58727F",
-}));
+import BaListItem from "../ui/BaListItem";
 
 const VehicleListItem = ({ vehicle }: { vehicle: any }) => {
   return (
-    <GridContainer container>
+    <BaListItem container>
       <Grid item>{vehicle.make}</Grid>
       <Grid item>{vehicle.modelYear}</Grid>
-    </GridContainer>
+    </BaListItem>
   );
 };
 
