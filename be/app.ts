@@ -5,8 +5,8 @@ import { loadBookingsData, loadVehiclesData } from "./utils/loadMockData";
 import { BookingService } from "./services/BookingService";
 import { connectToDatabase } from "./database";
 import { Db } from "mongodb";
-import vehicles from './api/vehicles';
-import bookings from './api/bookings';
+import vehicles from "./api/vehicles";
+import bookings from "./api/bookings";
 
 const app = express();
 
@@ -18,13 +18,10 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 const port = 3333;
-
-// TODO: better separation/setup
-
-/**
- * Services
- */
 const onDatabaseConnected = async (db: Db) => {
+  /**
+   * Services
+   */
   app.locals.vehiclesService = new VehiclesService(db);
   app.locals.bookingService = new BookingService(db);
 
@@ -39,7 +36,7 @@ const onDatabaseConnected = async (db: Db) => {
   });
 };
 
-app.use("/api/vehicles", vehicles)
+app.use("/api/vehicles", vehicles);
 
 app.use("/api/bookings", bookings);
 
