@@ -1,5 +1,5 @@
 export type VehicleDTO = {
-  id: string;
+  _id: string;
   modelYear: number;
   make: string;
 };
