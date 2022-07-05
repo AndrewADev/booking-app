@@ -14,5 +14,9 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.1",
+    "typescript": "^4.7.4"
   }
 }
