@@ -25,13 +25,13 @@ const port = 3333;
  */
 const onDatabaseConnected = async (db: Db) => {
   app.locals.vehiclesService = new VehiclesService(db);
-  app.locals.bookingService = new BookingService();
+  app.locals.bookingService = new BookingService(db);
 
   /**
    * Data load
    */
   await loadVehiclesData(app.locals.vehiclesService);
-  loadBookingsData(app.locals.bookingService);
+  await loadBookingsData(app.locals.bookingService);
 
   app.listen(port, () => {
     console.log("Listening on http://localhost:", port);
@@ -43,9 +43,9 @@ app.get("/api/vehicles", async (req, res) => {
   res.send(vehicles);
 });
 
-app.get("/api/bookings", (req, res) => {
+app.get("/api/bookings", async (req, res) => {
   // HACK: should be retrieved from Auth
-  const bookings = app.locals.bookingService.getAllBookingsForUser(mainUserId);
+  const bookings = await app.locals.bookingService.getAllBookingsForUser(mainUserId);
   res.send(bookings);
 });
 

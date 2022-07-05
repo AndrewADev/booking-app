@@ -22,15 +22,15 @@ export async function loadVehiclesData(vehiclesService: VehiclesService) {
   }
 }
 
-export function loadBookingsData(bookingService: BookingService) {
+export async function loadBookingsData(bookingService: BookingService) {
   // A quick, but imperfect way of doing this only once
   // other methods may involve breaking this out into a
   // command (since likely only needed when standing up
   // a new DB anyway)
-  const count = bookingService.getTotalBookingsCount();
+  const count = await bookingService.getTotalBookingsCount();
 
   if (count == 0) {
-    const inserted = bookingService.insertBulk(seedBookings);
+    const inserted = await bookingService.insertBulk(seedBookings);
     console.info(`Seeded ${inserted} Bookings`);
   } else {
     console.info("Bookings already present in DB. Not loading");
