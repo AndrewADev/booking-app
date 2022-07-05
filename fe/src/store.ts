@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { vehiclesApi } from "./api/vehiclesApi";
+import { bookingsApi } from "./api/bookingsApi";
 
 export const store = configureStore({
   reducer: {
+    [bookingsApi.reducerPath] : bookingsApi.reducer,
     [vehiclesApi.reducerPath]: vehiclesApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

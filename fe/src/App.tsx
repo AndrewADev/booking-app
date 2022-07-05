@@ -1,16 +1,15 @@
-import React from 'react';
-import './App.css';
-import VehicleList from './vehicles/VehicleList';
+import React from "react";
+import "./App.css";
+import LandingPageTabs from "./LandingPageTabs";
+
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>
-          Booking App
-        </h1>
+        <h1>Booking App</h1>
       </header>
-      <VehicleList />
+      <LandingPageTabs />
     </div>
   );
 }
