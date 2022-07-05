@@ -1,32 +1,35 @@
-import { v4 as uuidv4 } from "uuid";
+import { Db } from "mongodb";
 
 import { Booking } from "../entities/Booking";
 
 export class BookingService {
-  constructor() {}
+  dbClient: Db;
 
-  // TODO: needs persistence
-  bookings: Array<Booking> = [];
+  constructor(db: Db) {
+    this.dbClient = db;
+  }
 
-  bookResource(entity: Booking) {
-    // TODO: replace with actual crud logic
-    entity.id = uuidv4();
-
-    this.bookings.push(entity);
-
+  async bookResource(entity: Booking) {
+    const bookings = this.dbClient.collection("bookings");
+    await bookings.insertOne(entity);
     return entity;
   }
 
-  insertBulk(entities: Booking[]) {
-    this.bookings = this.bookings.concat(entities);
-    return entities.length;
+  async insertBulk(entities: Booking[]) {
+    const bookings = this.dbClient.collection("bookings");
+    const inserted = await bookings.insertMany(entities);
+    return inserted.insertedCount;
   }
 
-  getAllBookingsForUser(userId: string) {
-    return this.bookings.filter(booking => booking.userId === userId);
+  async getAllBookingsForUser(userId: string) {
+    const bookings = this.dbClient.collection("bookings");
+
+    return bookings.find({ userId: userId}).toArray();
   }
 
-  getTotalBookingsCount() {
-    return this.bookings.length;
+  async getTotalBookingsCount() {
+    const bookings = this.dbClient.collection("bookings");
+
+    return bookings.countDocuments()
   }
 }

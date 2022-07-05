@@ -1,18 +1,20 @@
+import {ObjectId} from 'mongodb'
+
 const seedVehicles = [
   {
     make: "VW",
     modelYear: 2021,
-    id: "00011122233a",
+    _id: new ObjectId("62c4baad63b8d8ccf92bdfcf"),
   },
   {
     make: "Dacia",
     modelYear: 2019,
-    id: "00011122233b",
+    _id: new ObjectId("62c4baad63b8d8ccf92bdfd0"),
   },
   {
     make: "Renault",
     modelYear: 2022,
-    id: "00011122233c",
+    _id: new ObjectId("62c4baad63b8d8ccf92bdfd1"),
   },
 ];
 

@@ -1,5 +1,7 @@
+import {ObjectId} from 'mongodb'
+
 export type Vehicle = {
-  id: string;
+  _id: ObjectId;
   modelYear: number;
   make: string;
 };

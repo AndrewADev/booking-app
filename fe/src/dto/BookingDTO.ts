@@ -3,7 +3,7 @@ export enum BookingType {
 }
 
 export type BookingDTO = {
-  id: string;
+  _id: string;
   bookingType: BookingType;
   expiresAt: string;
   bookedResourceId: string;
