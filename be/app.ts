@@ -1,7 +1,15 @@
 import express from 'express';
+import cors from 'cors';
 import { VehiclesService } from './services/VehiclesService';
 
 const app = express();
+
+// TODO: good place for config
+const corsOptions = {
+    origin: 'http://localhost:3000',
+}
+
+app.use(cors(corsOptions));
 
 const port = 3333;
 
