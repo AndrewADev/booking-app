@@ -1,4 +1,4 @@
-const { MongoClient, ServerApiVersion } = require("mongodb");
+import { MongoClient, ServerApiVersion, Db } from "mongodb";
 
 /**
  * Configure a MongoClient
@@ -19,17 +19,24 @@ function createClient(uri: string) {
  * @param database Database name to use
  * @returns configured database (on success)
  */
-async function connectToDatabase(uri: string, database: string) {
+async function connectToDatabase(
+  uri: string,
+  database: string,
+  connectionCallback?: (db: Db) => void
+) {
   const client = createClient(uri);
 
   try {
     await client.connect();
 
     const db = client.db(database);
+    if (connectionCallback && typeof connectionCallback === "function") {
+        connectionCallback(db);
+    }
     console.log("Established connection to MongoDB");
     return {
-        db,
-        close: () => client.close()
+      db,
+      close: () => client.close(),
     };
   } catch (exception: any) /* TODO: types */ {
     console.error("Caught error: ", exception);

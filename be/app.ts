@@ -4,6 +4,8 @@ import { VehiclesService } from "./services/VehiclesService";
 import { loadBookingsData, loadVehiclesData } from "./utils/loadMockData";
 import { BookingService } from "./services/BookingService";
 import { mainUserId } from "./mock-data/Users";
+import { connectToDatabase } from "./database";
+import { Db } from "mongodb";
 
 const app = express();
 
@@ -21,26 +23,34 @@ const port = 3333;
 /**
  * Services
  */
-const vehiclesService = new VehiclesService();
-const bookingService = new BookingService();
+const onDatabaseConnected = async (db: Db) => {
+  app.locals.vehiclesService = new VehiclesService(db);
+  app.locals.bookingService = new BookingService();
 
-/**
- * Data load
- */
-loadVehiclesData(vehiclesService);
-loadBookingsData(bookingService);
+  /**
+   * Data load
+   */
+  await loadVehiclesData(app.locals.vehiclesService);
+  loadBookingsData(app.locals.bookingService);
 
-app.get("/api/vehicles", (req, res) => {
-  const vehicles = vehiclesService.getAll();
+  app.listen(port, () => {
+    console.log("Listening on http://localhost:", port);
+  });
+};
+
+app.get("/api/vehicles", async (req, res) => {
+  const vehicles = await app.locals.vehiclesService.getAll();
   res.send(vehicles);
 });
 
 app.get("/api/bookings", (req, res) => {
-    // HACK: should be retrieved from Auth
-    const bookings = bookingService.getAllBookingsForUser(mainUserId);
-    res.send(bookings);
-})
-
-app.listen(port, () => {
-  console.log("Listening on http://localhost:", port);
+  // HACK: should be retrieved from Auth
+  const bookings = app.locals.bookingService.getAllBookingsForUser(mainUserId);
+  res.send(bookings);
 });
+
+connectToDatabase(
+  "mongodb://localhost:27017",
+  "booking-app",
+  onDatabaseConnected
+);
