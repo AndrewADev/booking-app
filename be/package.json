@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "Backend for the booking platform",
   "main": "app.ts",
+  "engines": {
+    "node": ">=16.14"
+  },
   "scripts": {
     "start": "ts-node --esm ./app.ts",
     "test": "jest"
