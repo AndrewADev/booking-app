@@ -16,7 +16,7 @@ const VehicleListItem = ({ vehicle }: { vehicle: any }) => {
       <Grid item>{vehicle.modelYear}</Grid>
       <Grid item>{vehicle.make}</Grid>
       <Grid item>
-        <Button onClick={onClick}>Book</Button>
+        <Button variant="outlined"  onClick={onClick}>Book</Button>
       </Grid>
     </BaListItem>
   );
