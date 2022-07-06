@@ -2,6 +2,8 @@
 
 A simple PoC-like app for booking various business-related resources (cars, offices).
 
+![preview](./docs/preview.png)
+
 ## Running the application
 
 On the FE (from `./fe`):
