@@ -10,8 +10,16 @@ export const vehiclesApi = createApi({
     endpoints: (builder) => ({
       getVehicles: builder.query<VehicleDTO, void>({
         query: () => '/vehicles'
+      }),
+      bookVehicle: builder.mutation<void, string>({
+        query: (id: string) => {
+          return {
+            url: `/vehicles/${id}/book`,
+            method: 'POST'
+          }
+        },
       })
     })
   });
 
-export const { useGetVehiclesQuery } = vehiclesApi;
+export const { useGetVehiclesQuery,useBookVehicleMutation } = vehiclesApi;

@@ -10,7 +10,7 @@ export const bookingsApi = createApi({
     endpoints: (builder) => ({
       getUserBookings: builder.query<BookingDTO, void>({
         query: () => '/bookings'
-      })
+      }),
     })
   });
 
