@@ -1,4 +1,4 @@
-import { Db } from "mongodb";
+import { Db, ObjectId } from "mongodb";
 
 import { Booking } from "../entities/Booking";
 
@@ -31,5 +31,12 @@ export class BookingService {
     const bookings = this.dbClient.collection("bookings");
 
     return bookings.countDocuments()
+  }
+
+  async deleteById(id: string) {
+    const parsedId = new ObjectId(id);
+
+    const bookings = this.dbClient.collection("bookings");
+    return bookings.deleteOne({ _id: parsedId })
   }
 }

@@ -11,4 +11,9 @@ router.get("/", async (req, res) => {
   res.send(bookings);
 });
 
+router.delete("/:id", async (req, res) => {
+  await req.app.locals.bookingService.deleteById(req.params.id);
+  res.status(204);
+});
+
 export default router;

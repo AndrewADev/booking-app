@@ -8,7 +8,7 @@ export const store = configureStore({
     [vehiclesApi.reducerPath]: vehiclesApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(vehiclesApi.middleware),
+    getDefaultMiddleware().concat([vehiclesApi.middleware, bookingsApi.middleware]),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
